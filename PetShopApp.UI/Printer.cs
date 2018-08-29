@@ -24,7 +24,6 @@ namespace PetShopApp.UI
                 Console.WriteLine($"Name: {pet.Name}  Type: {pet.Type}  Price: {pet.Price}");
             }
             Console.ReadLine();
-
         }
     }
 }
