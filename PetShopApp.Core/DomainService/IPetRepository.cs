@@ -8,5 +8,8 @@ namespace PetShopApp.Core.DomainService
     public interface IPetRepository
     {
         IEnumerable<Pet> ReadPets();
+
+        Pet CreatePet(Pet pet);
+
     }
 }

@@ -14,9 +14,16 @@ namespace Infrastructure.Data
             FakeDB.InitData();
         }
 
+        public Pet CreatePet(Pet pet)
+        {
+            FakeDB.Pets
+        }
+
         public IEnumerable<Pet> ReadPets()
         {
             return FakeDB.Pets;
         }
+
+
     }
 }
