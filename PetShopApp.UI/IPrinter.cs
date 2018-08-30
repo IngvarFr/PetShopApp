@@ -6,6 +6,6 @@ namespace PetShopApp.UI
 {
     interface IPrinter
     {
-        void PrintPets();
+        void InitUI();
     }
 }

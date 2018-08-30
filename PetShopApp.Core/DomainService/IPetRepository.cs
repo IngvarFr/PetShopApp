@@ -11,5 +11,8 @@ namespace PetShopApp.Core.DomainService
 
         Pet CreatePet(Pet pet);
 
+        Pet GetPetById(int id);
+
+        Pet RemovePet(Pet pet);
     }
 }
