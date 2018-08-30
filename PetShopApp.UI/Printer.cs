@@ -115,8 +115,8 @@ namespace PetShopApp.UI
                 Console.WriteLine("What is the pet's new color?");
                 var color = Console.ReadLine();
                 Console.WriteLine("What is the pet's new price?");
-                int price;
-                int.TryParse(Console.ReadLine(), out price);
+                double price;
+                double.TryParse(Console.ReadLine(), out price);
                 updatePet.Name = name;
                 updatePet.Type = type;
                 updatePet.Birthdate = birthday;
@@ -162,8 +162,8 @@ namespace PetShopApp.UI
             Console.WriteLine("What color is the pet?");
             var color = Console.ReadLine();
             Console.WriteLine("What is the price of the pet?");
-            int price;
-            int.TryParse(Console.ReadLine(), out price);
+            double price;
+            double.TryParse(Console.ReadLine(), out price);
             var pet = new Pet() { Name = name, Type = type, Birthdate = birthday, Color = color, Price = price };
             _petService.NewPet(pet);
             Console.WriteLine("The pet has been added");
