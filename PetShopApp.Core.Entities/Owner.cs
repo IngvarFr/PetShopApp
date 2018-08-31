@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PetShopApp.Core.Entities
 {
-    class Owner
+    public class Owner
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
