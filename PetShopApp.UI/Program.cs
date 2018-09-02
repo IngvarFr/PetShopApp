@@ -15,6 +15,8 @@ namespace PetShopApp.UI
             servicCollection.AddScoped<IPrinter, Printer>();
             servicCollection.AddScoped<IPetService, PetService>();
             servicCollection.AddScoped<IPetRepository, PetRepository>();
+            servicCollection.AddScoped<IOwnerRepository, OwnerRepository>();
+            servicCollection.AddScoped<IOwnerService, OwnerService>();
             var serviceProvider = servicCollection.BuildServiceProvider();
             var printer = serviceProvider.GetService<IPrinter>();
             printer.InitUI();

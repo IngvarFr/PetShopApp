@@ -10,10 +10,12 @@ namespace PetShopApp.UI
     class Printer : IPrinter
     {
         private IPetService _petService;
+        private IOwnerService _ownerService;
 
-        public Printer(IPetService petService)
+        public Printer(IPetService petService, IOwnerService ownerService)
         {
             _petService = petService;
+            _ownerService = ownerService;
         }
 
         public void InitUI()
@@ -33,7 +35,8 @@ namespace PetShopApp.UI
             Console.WriteLine("5: Update a pet");
             Console.WriteLine("6: Delete a pet");
             Console.WriteLine("7: Show the five cheapest pets");
-            Console.WriteLine("8: Exit");
+            Console.WriteLine("8: Manage Owners");
+            Console.WriteLine("9: Exit");
             Console.WriteLine("-----------------------");
             Console.WriteLine("What would you like to do?");
         }
@@ -79,16 +82,151 @@ namespace PetShopApp.UI
                         break;
 
                     case 8:
+                        DoOwnerMenu();
+                        break;
+
+                    case 9:
                         exit = true;
+                        Console.Clear();
                         Console.WriteLine("Good bye");
                         Console.ReadLine();
                         break;
 
                     default:
                         Console.WriteLine("Make a valid selection");
+                        Console.ReadLine();
                         break;
                 }
             }
+        }
+
+        private void DoOwnerMenu()
+        {
+            bool goBack = false;
+
+            while(!goBack)
+            {
+                Console.Clear();
+                Console.WriteLine("1: List all Owners");
+                Console.WriteLine("2: Create an Owner");
+                Console.WriteLine("3: Update an Owner");
+                Console.WriteLine("4: Delete an Owner");
+                Console.WriteLine("5: Go back to main menu");
+ 
+                int.TryParse(Console.ReadLine(), out int sel);
+
+                switch (sel)
+                {
+                    case 1:
+                        ListOwners(_ownerService.GetOwners());
+                        break;
+
+                    case 2:
+                        CreateOwner();
+                        break;
+
+                    case 3:
+                        UpdateOwner();
+                        break;
+
+                    case 4:
+                        DeleteOwner();
+                        break;
+
+                    case 5:
+                        goBack = true;
+                        break;
+
+                    default:
+                        Console.WriteLine("Please make a valid selection");
+                        Console.ReadLine();
+                        break;
+                }
+            }
+        }
+
+        private void DeleteOwner()
+        {
+            Console.Clear();
+            Console.WriteLine("Enter the id of the owner you want to delete");
+            int.TryParse(Console.ReadLine(), out int id);
+            var ownerToDelete = _ownerService.GetOwnerById(id);
+            if (ownerToDelete != null)
+            {
+                _ownerService.DeleteOwner(id);
+                Console.WriteLine("The owner was deleted");            
+            }
+            else
+            {
+                Console.WriteLine("There is no owner with that id");
+            }
+            Console.ReadLine();
+        }
+
+        private void UpdateOwner()
+        {
+            Console.Clear();
+            Console.WriteLine("Enter the id of the owner you want to update");
+            int.TryParse(Console.ReadLine(), out int id);
+            var ownerToUpdate = _ownerService.GetOwnerById(id);
+            if (ownerToUpdate != null)
+            {
+                Console.WriteLine("What is the owners new first name?");
+                ownerToUpdate.FirstName = Console.ReadLine();
+                Console.WriteLine("What is the owners new last name?");
+                ownerToUpdate.LastName = Console.ReadLine();
+                Console.WriteLine("What is the owners new address?");
+                ownerToUpdate.Address = Console.ReadLine();
+                Console.WriteLine("What is the owners new email?");
+                ownerToUpdate.Email = Console.ReadLine();
+                Console.WriteLine("What is the owners new phonenumber?");
+                ownerToUpdate.PhoneNumber = Console.ReadLine();
+
+                _ownerService.UpdateOwner(ownerToUpdate);
+                Console.WriteLine("The owner was updated");
+            }
+            else
+            {
+                Console.WriteLine("There is no owner with that id");                
+            }
+            Console.ReadLine();
+        }
+
+        private void CreateOwner()
+        {
+            Console.Clear();
+            var newOwner = new Owner();
+            Console.WriteLine("What is the owners first name?");
+            var firstName = Console.ReadLine();
+            Console.WriteLine("What is the owners last name?");
+            var lastName = Console.ReadLine();
+            Console.WriteLine("What is the owners address?");
+            var address = Console.ReadLine();
+            Console.WriteLine("What is the owners email?");
+            var email = Console.ReadLine();
+            Console.WriteLine("What is the owners phonenumber?");
+            var phoneNr = Console.ReadLine();
+
+            newOwner.FirstName = firstName;
+            newOwner.LastName = lastName;
+            newOwner.Address = address;
+            newOwner.Email = email;
+            newOwner.PhoneNumber = phoneNr;
+            _ownerService.NewOwner(newOwner);
+            Console.WriteLine("The owner was created");
+            Console.ReadLine();
+        }
+
+        private void ListOwners(List<Owner> owners)
+        {
+            Console.Clear();
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------------");
+            foreach (var owner in owners)
+            {
+                Console.WriteLine($" Id: {owner.Id}  Name: {owner.FirstName} {owner.LastName}  Address: {owner.Address}  Email: {owner.Email}  Phonenumber: {owner.PhoneNumber}");
+                Console.WriteLine("------------------------------------------------------------------------------------------------------------------------------");
+            }
+            Console.ReadLine();
         }
 
         private void PrintFiveCheapest()
