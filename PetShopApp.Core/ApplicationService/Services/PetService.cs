@@ -9,7 +9,7 @@ namespace PetShopApp.Core.ApplicationService.Services
 {
     public class PetService : IPetService
     {
-        private IPetRepository _petRepository;
+        private readonly IPetRepository _petRepository;
 
         public PetService(IPetRepository petRepository)
         {
