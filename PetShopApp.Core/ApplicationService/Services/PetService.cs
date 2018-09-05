@@ -10,10 +10,12 @@ namespace PetShopApp.Core.ApplicationService.Services
     public class PetService : IPetService
     {
         private readonly IPetRepository _petRepository;
+        private readonly IOwnerRepository _ownerRepository;
 
-        public PetService(IPetRepository petRepository)
+        public PetService(IPetRepository petRepository, IOwnerRepository ownerRepository)
         {
             _petRepository = petRepository;
+            _ownerRepository = ownerRepository;
         }
 
         public void UpdatePet(Pet pet)
@@ -46,7 +48,12 @@ namespace PetShopApp.Core.ApplicationService.Services
 
         public List<Pet> GetPets()
         {
-            return _petRepository.ReadPets().ToList();
+            var pets = _petRepository.ReadPets();
+            foreach (var pet in _petRepository.ReadPets().ToList())
+            {
+                pet.PreviousOwner = _ownerRepository.GetOwnerById(pet.PreviousOwner.Id);
+            }
+            return pets.ToList();
         }
 
         public List<Pet> GetPetsByPrice()

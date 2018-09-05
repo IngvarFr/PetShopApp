@@ -22,17 +22,17 @@ namespace Infrastructure.Data
         public static void InitData()
         {
             petList = new List<Pet>();
-            petList.Add(new Pet() { Name = "Sam", Type = "Dog", Price = 200, Id = id++, Birthdate = new DateTime(2004, 3, 12) });
-            petList.Add(new Pet() { Name = "Maggie", Type = "Cat", Price = 150, Id = id++, Birthdate = new DateTime(2007, 12, 14) });
-            petList.Add(new Pet() { Name = "Ella", Type = "Rabbit", Price = 120, Id = id++, Birthdate = new DateTime(2009, 7, 25) });
-            petList.Add(new Pet() { Name = "Hammy", Type = "Hamster", Price = 75, Id = id++, Birthdate = new DateTime(2014, 1, 18) });
-            petList.Add(new Pet() { Name = "Doggo", Type = "Dog", Price = 175, Id = id++, Birthdate = new DateTime(2016, 8, 30) });
-            petList.Add(new Pet() { Name = "Steve", Type = "Mouse", Price = 100, Id = id++, Birthdate = new DateTime(2018, 4, 24) });
-            petList.Add(new Pet() { Name = "Squawks", Type = "Parrot", Price = 300, Id = id++, Birthdate = new DateTime(2015, 2, 28) });
-            petList.Add(new Pet() { Name = "Jo", Type = "Cat", Price = 160, Id = id++, Birthdate = new DateTime(2017, 10, 9) });
-            petList.Add(new Pet() { Name = "Cleo", Type = "Rabbit", Price = 135, Id = id++, Birthdate = new DateTime(2011, 5, 5) });
-            petList.Add(new Pet() { Name = "Manny", Type = "Lizard", Price = 220, Id = id++, Birthdate = new DateTime(2002, 6, 17) });
-            petList.Add(new Pet() { Name = "Noodle", Type = "Snake", Price = 500, Id = id++, Birthdate = new DateTime(2008, 11, 14) });
+            petList.Add(new Pet() { Name = "Sam", Type = "Dog", Price = 200, Id = id++, Birthdate = new DateTime(2004, 3, 12), PreviousOwner = new Owner() { Id = 1 } });
+            petList.Add(new Pet() { Name = "Maggie", Type = "Cat", Price = 150, Id = id++, Birthdate = new DateTime(2007, 12, 14), PreviousOwner = new Owner() { Id = 2 } });
+            petList.Add(new Pet() { Name = "Ella", Type = "Rabbit", Price = 120, Id = id++, Birthdate = new DateTime(2009, 7, 25), PreviousOwner = new Owner() { Id = 6 } });
+            petList.Add(new Pet() { Name = "Hammy", Type = "Hamster", Price = 75, Id = id++, Birthdate = new DateTime(2014, 1, 18), PreviousOwner = new Owner() { Id = 3 } });
+            petList.Add(new Pet() { Name = "Doggo", Type = "Dog", Price = 175, Id = id++, Birthdate = new DateTime(2016, 8, 30), PreviousOwner = new Owner() { Id = 5 } });
+            petList.Add(new Pet() { Name = "Steve", Type = "Mouse", Price = 100, Id = id++, Birthdate = new DateTime(2018, 4, 24), PreviousOwner = new Owner() { Id = 2 } });
+            petList.Add(new Pet() { Name = "Squawks", Type = "Parrot", Price = 300, Id = id++, Birthdate = new DateTime(2015, 2, 28), PreviousOwner = new Owner() { Id = 3 } });
+            petList.Add(new Pet() { Name = "Jo", Type = "Cat", Price = 160, Id = id++, Birthdate = new DateTime(2017, 10, 9), PreviousOwner = new Owner() { Id = 4 } });
+            petList.Add(new Pet() { Name = "Cleo", Type = "Rabbit", Price = 135, Id = id++, Birthdate = new DateTime(2011, 5, 5), PreviousOwner = new Owner() { Id = 6 } });
+            petList.Add(new Pet() { Name = "Manny", Type = "Lizard", Price = 220, Id = id++, Birthdate = new DateTime(2002, 6, 17), PreviousOwner = new Owner() { Id = 2 } });
+            petList.Add(new Pet() { Name = "Noodle", Type = "Snake", Price = 500, Id = id++, Birthdate = new DateTime(2008, 11, 14), PreviousOwner = new Owner() { Id = 1 } });
             Pets = petList;
 
             ownerList = new List<Owner>();
