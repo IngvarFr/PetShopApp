@@ -10,11 +10,6 @@ namespace Infrastructure.Data
     public class PetRepository : IPetRepository
     {
 
-        public PetRepository()
-        {
-            FakeDB.InitData();
-        }
-
         public Pet CreatePet(Pet pet)
         {
             return FakeDB.AddPet(pet);

@@ -10,11 +10,11 @@ namespace PetApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PetController : ControllerBase
+    public class PetsController : ControllerBase
     {
         private readonly IPetService _petService;
 
-        public PetController(IPetService petService)
+        public PetsController(IPetService petService)
         {
             _petService = petService;
         }
@@ -35,20 +35,26 @@ namespace PetApi.Controllers
 
         // POST api/pets
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<Pet> Post([FromBody] Pet pet)
         {
+            pet.Id = 0;
+            return _petService.NewPet(pet);
         }
 
         // PUT api/pets/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] Pet pet)
         {
+            var petToUpdate = _petService.GetPetById(id);
+            pet.Id = petToUpdate.Id;
+            _petService.UpdatePet(pet);
         }
 
         // DELETE api/pets/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            _petService.DeletePet(id);
         }
     }
 }

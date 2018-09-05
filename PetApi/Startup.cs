@@ -22,6 +22,7 @@ namespace PetApi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            FakeDB.InitData();
         }
 
         public IConfiguration Configuration { get; }
@@ -33,6 +34,7 @@ namespace PetApi
             services.AddScoped<IPetRepository, PetRepository>();
             services.AddScoped<IOwnerRepository, OwnerRepository>();
             services.AddScoped<IOwnerService, OwnerService>();
+            services.BuildServiceProvider();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
