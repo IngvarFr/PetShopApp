@@ -1,4 +1,5 @@
-﻿using PetShopApp.Core.DomainService;
+﻿using Microsoft.EntityFrameworkCore;
+using PetShopApp.Core.DomainService;
 using PetShopApp.Core.Entities;
 using System;
 using System.Collections.Generic;
@@ -25,17 +26,19 @@ namespace Infrastructure.Data.EntityFramework.Repositories
 
         public Pet GetPetById(int id)
         {
-            return _ctx.Pets.FirstOrDefault(p => p.Id.Equals(id));
+            return _ctx.Pets.Include(p => p.PreviousOwner).FirstOrDefault(p => p.Id.Equals(id));
         }
 
         public IEnumerable<Pet> ReadPets()
         {
-            return _ctx.Pets;
+            return _ctx.Pets.Include(p => p.PreviousOwner);
         }
 
         public Pet RemovePet(Pet pet)
         {
-            throw new NotImplementedException();
+            var p = _ctx.Pets.Remove(pet).Entity;
+            _ctx.SaveChanges();
+            return p;
         }
     }
 }

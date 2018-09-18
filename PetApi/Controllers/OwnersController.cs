@@ -36,9 +36,9 @@ namespace PetShopApp.RestApi.Controllers
 
         // POST: api/Owners
         [HttpPost]
-        public void Post([FromBody] Owner owner)
+        public Owner Post([FromBody] Owner owner)
         {
-            _ownerService.NewOwner(owner);
+            return _ownerService.NewOwner(owner);
         }
 
         // PUT: api/Owners/5

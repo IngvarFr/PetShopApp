@@ -49,10 +49,10 @@ namespace PetShopApp.Core.ApplicationService.Services
         public List<Pet> GetPets()
         {
             var pets = _petRepository.ReadPets();
-            foreach (var pet in _petRepository.ReadPets().ToList())
-            {
-                pet.PreviousOwner = _ownerRepository.GetOwnerById(pet.PreviousOwner.Id);
-            }
+            //foreach (var pet in _petRepository.ReadPets().ToList())
+            //{
+            //    pet.PreviousOwner = _ownerRepository.GetOwnerById(pet.PreviousOwner.Id);
+            //}
             return pets.ToList();
         }
 
