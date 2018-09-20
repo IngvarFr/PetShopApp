@@ -34,7 +34,7 @@ namespace PetApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<PetShopDbContext>(opt => opt.UseInMemoryDatabase("TheDB"));
+            services.AddDbContext<PetShopDbContext>(opt => opt.UseSqlite("Data Source=PetShopApp.db"));
             services.AddScoped<IPetService, PetService>();
             services.AddScoped<IPetRepository, PetRepository>();
             services.AddScoped<IOwnerRepository, OwnerRepository>();
@@ -52,6 +52,7 @@ namespace PetApi
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
                     var ctx = scope.ServiceProvider.GetService<PetShopDbContext>();
+                    ctx.Database.EnsureCreated();
                     var own1 = new Owner() { FirstName = "Bob", LastName = "Barker", Address = "Happy Street 23", Email = "bob@barker.com", PhoneNumber = "9549-8724" };
                     var own2 = new Owner() { FirstName = "Jessie", LastName = "Smith", Address = "Shark Beach 42", Email = "jess@gmail.com", PhoneNumber = "3584-1287" };
                     var own3 = new Owner() { FirstName = "Carl", LastName = "Comb", Address = "Neville Lane 12", Email = "carl@yahoo.com", PhoneNumber = "8925-4153" };
