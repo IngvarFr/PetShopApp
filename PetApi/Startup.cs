@@ -23,18 +23,29 @@ namespace PetApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
-            
+            Environment = env;
         }
 
+        public IHostingEnvironment Environment { get; }
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<PetShopDbContext>(opt => opt.UseSqlite("Data Source=PetShopApp.db"));
+            if (Environment.IsDevelopment())
+            {
+                services.AddDbContext<PetShopDbContext>(opt =>
+                opt.UseSqlite("Data Source=PetShopApp.db"));
+            }
+            else
+            {
+                services.AddDbContext<PetShopDbContext>(opt => 
+                opt.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
+            }
+            
             services.AddScoped<IPetService, PetService>();
             services.AddScoped<IPetRepository, PetRepository>();
             services.AddScoped<IOwnerRepository, OwnerRepository>();
@@ -49,33 +60,14 @@ namespace PetApi
         {
             if (env.IsDevelopment())
             {
-                using (var scope = app.ApplicationServices.CreateScope())
-                {
-                    var ctx = scope.ServiceProvider.GetService<PetShopDbContext>();
-                    ctx.Database.EnsureCreated();
-                    var own1 = new Owner() { FirstName = "Bob", LastName = "Barker", Address = "Happy Street 23", Email = "bob@barker.com", PhoneNumber = "9549-8724" };
-                    var own2 = new Owner() { FirstName = "Jessie", LastName = "Smith", Address = "Shark Beach 42", Email = "jess@gmail.com", PhoneNumber = "3584-1287" };
-                    var own3 = new Owner() { FirstName = "Carl", LastName = "Comb", Address = "Neville Lane 12", Email = "carl@yahoo.com", PhoneNumber = "8925-4153" };
-                    var own4 = new Owner() { FirstName = "Tim", LastName = "Turner", Address = "Magpie Way 8", Email = "tim@hotmail.com", PhoneNumber = "9813-5485" };
-
-                    ctx.Pets.Add(new Pet() { Name = "Sam", Type = "Dog", Price = 200, Birthdate = new DateTime(2004, 3, 12), PreviousOwner = own1 });
-                    ctx.Pets.Add(new Pet() { Name = "Maggie", Type = "Cat", Price = 150, Birthdate = new DateTime(2007, 12, 14), PreviousOwner = own2 });
-                    ctx.Pets.Add(new Pet() { Name = "Ella", Type = "Rabbit", Price = 120, Birthdate = new DateTime(2009, 7, 25), PreviousOwner = own3 });
-                    ctx.Pets.Add(new Pet() { Name = "Hammy", Type = "Hamster", Price = 75, Birthdate = new DateTime(2014, 1, 18), PreviousOwner = own3 });
-
-
-                    
-                    ctx.SaveChanges();
-                }
+                
                 
                 app.UseDeveloperExceptionPage();
             }
             else
             {
-                app.UseHsts();
+                app.UseDeveloperExceptionPage();
             }
-
-            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }

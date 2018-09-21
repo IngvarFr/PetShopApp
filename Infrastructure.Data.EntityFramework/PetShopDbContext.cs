@@ -14,7 +14,9 @@ namespace Infrastructure.Data.EntityFramework
 
         public PetShopDbContext(DbContextOptions<PetShopDbContext> opt): base(opt)
         {
-
+            
         }
+
+        
     }
 }
