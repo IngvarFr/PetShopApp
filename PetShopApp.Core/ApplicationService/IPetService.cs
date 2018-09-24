@@ -9,6 +9,8 @@ namespace PetShopApp.Core.ApplicationService
     {
         List<Pet> GetPets();
 
+        List<Pet> GetPetsIncludeOwner();
+
         Pet NewPet(Pet pet);
 
         List<Pet> GetPetsByPrice();
@@ -19,7 +21,9 @@ namespace PetShopApp.Core.ApplicationService
 
         Pet GetPetById(int id);
 
-        void UpdatePet(Pet updatePet);
+        Pet GetPetByIdIncludeOwner(int id);
+
+        Pet UpdatePet(Pet updatePet);
 
         List<Pet> GetFiveCheapest();
     }

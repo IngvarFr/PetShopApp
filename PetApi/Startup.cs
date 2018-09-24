@@ -39,6 +39,7 @@ namespace PetApi
             {
                 services.AddDbContext<PetShopDbContext>(opt =>
                 opt.UseSqlite("Data Source=PetShopApp.db"));
+
             }
             else
             {
@@ -60,8 +61,12 @@ namespace PetApi
         {
             if (env.IsDevelopment())
             {
-                
-                
+                using (var scope = app.ApplicationServices.CreateScope())
+                {
+                    var ctx = scope.ServiceProvider.GetService<PetShopDbContext>();
+                    DbSeeder.Seed(ctx);
+                }
+
                 app.UseDeveloperExceptionPage();
             }
             else

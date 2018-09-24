@@ -23,14 +23,23 @@ namespace PetApi.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Pet>> Get()
         {
-            return _petService.GetPets();
+            return _petService.GetPetsIncludeOwner();
         }
 
         // GET api/pets/5
         [HttpGet("{id}")]
         public ActionResult<Pet> Get(int id)
         {
-            return _petService.GetPetById(id);
+            var pet = _petService.GetPetByIdIncludeOwner(id);
+            if (pet != null)
+            {
+                return pet;
+            }
+            else
+            {
+                return BadRequest($"There is no pet with Id: {id} in the database"); 
+            }
+          
         }
 
         // POST api/pets

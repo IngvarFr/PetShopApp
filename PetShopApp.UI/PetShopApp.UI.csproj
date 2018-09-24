@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure.Data\Infrastructure.Data.csproj" />
     <ProjectReference Include="..\PetShopApp.Core.Entities\PetShopApp.Core.Entities.csproj" />
     <ProjectReference Include="..\PetShopApp.Core\PetShopApp.Core.csproj" />
   </ItemGroup>

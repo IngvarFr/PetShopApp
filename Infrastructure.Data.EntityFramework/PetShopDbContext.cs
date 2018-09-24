@@ -13,10 +13,13 @@ namespace Infrastructure.Data.EntityFramework
         public DbSet<Owner> Owners { get; set; }
 
         public PetShopDbContext(DbContextOptions<PetShopDbContext> opt): base(opt)
+        { }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            modelBuilder.Entity<Pet>().HasOne(p => p.PreviousOwner).WithMany().OnDelete(DeleteBehavior.SetNull);
         }
 
-        
+
     }
 }

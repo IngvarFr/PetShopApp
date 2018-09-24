@@ -9,10 +9,17 @@ namespace PetShopApp.Core.DomainService
     {
         IEnumerable<Pet> ReadPets();
 
+        IEnumerable<Pet> ReadPetsIncludeOwners();
+
         Pet CreatePet(Pet pet);
 
         Pet GetPetById(int id);
 
+        Pet GetPetByIdIncludeOwner(int id);
+
+        Pet UpdatePet(Pet pet);
+
         Pet RemovePet(Pet pet);
+
     }
 }

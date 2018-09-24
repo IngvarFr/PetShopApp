@@ -19,17 +19,31 @@ namespace Infrastructure.Data.EntityFramework.Repositories
 
         public Pet CreatePet(Pet pet)
         {
-            var pet1 = _ctx.Add(pet).Entity;
+            if (pet.PreviousOwner != null)
+            {
+                _ctx.Attach(pet.PreviousOwner);
+            }
+            _ctx.Attach(pet).State = EntityState.Added;
             _ctx.SaveChanges();
-            return pet1;
+            return pet;
         }
 
         public Pet GetPetById(int id)
+        {
+            return _ctx.Pets.FirstOrDefault(p => p.Id.Equals(id));
+        }
+
+        public Pet GetPetByIdIncludeOwner(int id)
         {
             return _ctx.Pets.Include(p => p.PreviousOwner).FirstOrDefault(p => p.Id.Equals(id));
         }
 
         public IEnumerable<Pet> ReadPets()
+        {
+            return _ctx.Pets;
+        }
+
+        public IEnumerable<Pet> ReadPetsIncludeOwners()
         {
             return _ctx.Pets.Include(p => p.PreviousOwner);
         }
@@ -39,6 +53,22 @@ namespace Infrastructure.Data.EntityFramework.Repositories
             var p = _ctx.Pets.Remove(pet).Entity;
             _ctx.SaveChanges();
             return p;
+        }
+
+        public Pet UpdatePet(Pet pet)
+        {
+            if (pet.PreviousOwner != null && (_ctx.ChangeTracker.Entries<Pet>().FirstOrDefault(pe => pe.Entity.Id == pet.PreviousOwner.Id)) == null)
+            {
+                _ctx.Attach(pet.PreviousOwner);
+            }
+
+            _ctx.Entry(pet).Reference(p => p.PreviousOwner).IsModified = true;
+            //var updated = _ctx.Update(pet).Entity;
+
+            _ctx.Attach(pet).State = EntityState.Modified;
+
+            _ctx.SaveChanges();
+            return pet;
         }
     }
 }

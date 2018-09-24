@@ -18,14 +18,9 @@ namespace PetShopApp.Core.ApplicationService.Services
             _ownerRepository = ownerRepository;
         }
 
-        public void UpdatePet(Pet pet)
+        public Pet UpdatePet(Pet pet)
         {
-            var petToUpdate = _petRepository.GetPetById(pet.Id);
-            petToUpdate.Name = pet.Name;
-            petToUpdate.Type = pet.Type;
-            petToUpdate.Birthdate = pet.Birthdate;
-            petToUpdate.Color = pet.Color;
-            petToUpdate.Price = pet.Price;
+            return _petRepository.UpdatePet(pet);
         }
 
         public Pet DeletePet(int id)
@@ -48,12 +43,7 @@ namespace PetShopApp.Core.ApplicationService.Services
 
         public List<Pet> GetPets()
         {
-            var pets = _petRepository.ReadPets();
-            //foreach (var pet in _petRepository.ReadPets().ToList())
-            //{
-            //    pet.PreviousOwner = _ownerRepository.GetOwnerById(pet.PreviousOwner.Id);
-            //}
-            return pets.ToList();
+            return _petRepository.ReadPets().ToList();
         }
 
         public List<Pet> GetPetsByPrice()
@@ -76,6 +66,16 @@ namespace PetShopApp.Core.ApplicationService.Services
             var cheapestList = _petRepository.ReadPets().OrderBy(p => p.Price).Take(5).ToList();
             return cheapestList;
             
+        }
+
+        public List<Pet> GetPetsIncludeOwner()
+        {
+            return _petRepository.ReadPetsIncludeOwners().ToList();
+        }
+
+        public Pet GetPetByIdIncludeOwner(int id)
+        {
+            return _petRepository.GetPetByIdIncludeOwner(id);
         }
     }
 }
