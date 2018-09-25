@@ -28,6 +28,11 @@ namespace Infrastructure.Data.EntityFramework.Repositories
             return pet;
         }
 
+        public IEnumerable<Pet> GetFilteredPets(Filter filter)
+        {
+            return _ctx.Pets.Skip(filter.ItemsPerPage * (filter.CurrentPage - 1)).Take(filter.ItemsPerPage);
+        }
+
         public Pet GetPetById(int id)
         {
             return _ctx.Pets.FirstOrDefault(p => p.Id.Equals(id));

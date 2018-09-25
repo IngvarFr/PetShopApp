@@ -71,6 +71,11 @@ namespace PetApi
             }
             else
             {
+                using (var scope = app.ApplicationServices.CreateScope())
+                {
+                    var ctx = scope.ServiceProvider.GetService<PetShopDbContext>();
+                    DbSeeder.Seed(ctx);
+                }
                 app.UseDeveloperExceptionPage();
             }
             app.UseMvc();

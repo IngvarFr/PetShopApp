@@ -21,5 +21,6 @@ namespace PetShopApp.Core.DomainService
 
         Pet RemovePet(Pet pet);
 
+        IEnumerable<Pet> GetFilteredPets(Filter filter);
     }
 }

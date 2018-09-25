@@ -1,4 +1,5 @@
-﻿using PetShopApp.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using PetShopApp.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,10 +17,10 @@ namespace Infrastructure.Data.EntityFramework
             var own3 = new Owner() { FirstName = "Carl", LastName = "Comb", Address = "Neville Lane 12", Email = "carl@yahoo.com", PhoneNumber = "8925-4153" };
             var own4 = new Owner() { FirstName = "Tim", LastName = "Turner", Address = "Magpie Way 8", Email = "tim@hotmail.com", PhoneNumber = "9813-5485" };
 
-            ctx.Pets.Add(new Pet() { Name = "Sam", Type = "Dog", Price = 200, Birthdate = new DateTime(2004, 3, 12), PreviousOwner = own1 });
-            ctx.Pets.Add(new Pet() { Name = "Maggie", Type = "Cat", Price = 150, Birthdate = new DateTime(2007, 12, 14), PreviousOwner = own2 });
-            ctx.Pets.Add(new Pet() { Name = "Ella", Type = "Rabbit", Price = 120, Birthdate = new DateTime(2009, 7, 25), PreviousOwner = own3 });
-            ctx.Pets.Add(new Pet() { Name = "Hammy", Type = "Hamster", Price = 75, Birthdate = new DateTime(2014, 1, 18), PreviousOwner = own3 });
+            ctx.Attach(new Pet() { Name = "Sam", Type = "Dog", Price = 200, Birthdate = new DateTime(2004, 3, 12), PreviousOwner = own1 }).State = EntityState.Added;
+            ctx.Attach(new Pet() { Name = "Maggie", Type = "Cat", Price = 150, Birthdate = new DateTime(2007, 12, 14), PreviousOwner = own2 }).State = EntityState.Added;
+            ctx.Attach(new Pet() { Name = "Ella", Type = "Rabbit", Price = 120, Birthdate = new DateTime(2009, 7, 25), PreviousOwner = own3 }).State = EntityState.Added;
+            ctx.Attach(new Pet() { Name = "Hammy", Type = "Hamster", Price = 75, Birthdate = new DateTime(2014, 1, 18), PreviousOwner = own3 }).State = EntityState.Added;
 
             ctx.SaveChanges();
         }

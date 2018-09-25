@@ -26,5 +26,7 @@ namespace PetShopApp.Core.ApplicationService
         Pet UpdatePet(Pet updatePet);
 
         List<Pet> GetFiveCheapest();
+
+        List<Pet> GetFilteredPets(Filter filter);
     }
 }

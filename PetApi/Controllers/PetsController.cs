@@ -21,9 +21,13 @@ namespace PetApi.Controllers
 
         // GET api/pets
         [HttpGet]
-        public ActionResult<IEnumerable<Pet>> Get()
+        public ActionResult<IEnumerable<Pet>> Get([FromQuery] Filter filter)
         {
-            return _petService.GetPetsIncludeOwner();
+            if (filter.CurrentPage <= 0 || filter.ItemsPerPage <= 0)
+            {
+                return _petService.GetPetsIncludeOwner();
+            }
+            return _petService.GetFilteredPets(filter);
         }
 
         // GET api/pets/5

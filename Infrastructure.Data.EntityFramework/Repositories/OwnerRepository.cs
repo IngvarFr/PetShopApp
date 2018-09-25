@@ -18,14 +18,14 @@ namespace Infrastructure.Data.EntityFramework.Repositories
         }
         public Owner CreateOwner(Owner owner)
         {
-            var own = _ctx.Owners.Add(owner).Entity;
+            _ctx.Attach(owner).State = EntityState.Added;
             _ctx.SaveChanges();
-            return own;
+            return owner;
         }
 
         public Owner GetOwnerById(int id)
         {
-            return _ctx.Owners.FirstOrDefault(o => o.Id.Equals(id));
+            return _ctx.Owners.AsNoTracking().FirstOrDefault(o => o.Id.Equals(id));
         }
 
         public IEnumerable<Owner> ReadOwners()
@@ -35,9 +35,17 @@ namespace Infrastructure.Data.EntityFramework.Repositories
 
         public Owner RemoveOwner(Owner owner)
         {
-            var o = _ctx.Owners.Remove(owner).Entity;
+            _ctx.Attach(owner).State = EntityState.Deleted;
             _ctx.SaveChanges();
-            return o;
+            return owner;
+        }
+
+        public Owner UpdateOwner(Owner owner)
+        {
+            _ctx.Entry(owner).State = EntityState.Detached;
+            _ctx.Attach(owner).State = EntityState.Modified;
+            _ctx.SaveChanges();
+            return owner;
         }
     }
 }

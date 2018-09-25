@@ -13,6 +13,8 @@ namespace PetShopApp.Core.DomainService
 
         Owner GetOwnerById(int id);
 
+        Owner UpdateOwner(Owner owner);
+
         Owner RemoveOwner(Owner owner);
 
     }

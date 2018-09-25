@@ -43,11 +43,19 @@ namespace PetShopApp.RestApi.Controllers
 
         // PUT: api/Owners/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Owner owner)
+        public ActionResult<Owner> Put(int id, [FromBody] Owner owner)
         {
-            var ownerToUpdate = _ownerService.GetOwnerById(id);
-            owner.Id = ownerToUpdate.Id;
-            _ownerService.UpdateOwner(owner);
+            if (_ownerService.GetOwnerById(id) != null)
+            {
+                owner.Id = id;
+                return _ownerService.UpdateOwner(owner);
+
+            }
+            else
+            {
+                return BadRequest("No owner with that id");
+            }
+            
         }
 
         // DELETE: api/ApiWithActions/5

@@ -77,5 +77,10 @@ namespace PetShopApp.Core.ApplicationService.Services
         {
             return _petRepository.GetPetByIdIncludeOwner(id);
         }
+
+        public List<Pet> GetFilteredPets(Filter filter)
+        {
+            return _petRepository.GetFilteredPets(filter).ToList();
+        }
     }
 }

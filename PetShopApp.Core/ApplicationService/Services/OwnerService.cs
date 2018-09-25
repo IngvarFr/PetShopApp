@@ -37,14 +37,11 @@ namespace PetShopApp.Core.ApplicationService.Services
             return _ownerRepository.CreateOwner(owner);
         }
 
-        public void UpdateOwner(Owner updateOwner)
+        public Owner UpdateOwner(Owner updateOwner)
         {
             var ownerToUpdate = GetOwnerById(updateOwner.Id);
-            ownerToUpdate.FirstName = updateOwner.FirstName;
-            ownerToUpdate.LastName = updateOwner.LastName;
-            ownerToUpdate.Address = updateOwner.Address;
-            ownerToUpdate.Email = updateOwner.Email;
-            ownerToUpdate.PhoneNumber = updateOwner.PhoneNumber;
+            ownerToUpdate = updateOwner;
+            return _ownerRepository.UpdateOwner(ownerToUpdate);
         }
     }
 }
