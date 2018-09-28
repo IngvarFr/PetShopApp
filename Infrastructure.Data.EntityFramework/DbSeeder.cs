@@ -10,7 +10,7 @@ namespace Infrastructure.Data.EntityFramework
     {
         public static void Seed(PetShopDbContext ctx)
         {
-            ctx.Database.EnsureDeleted();
+            //ctx.Database.EnsureDeleted();
             ctx.Database.EnsureCreated();
             var own1 = new Owner() { FirstName = "Bob", LastName = "Barker", Address = "Happy Street 23", Email = "bob@barker.com", PhoneNumber = "9549-8724" };
             var own2 = new Owner() { FirstName = "Jessie", LastName = "Smith", Address = "Shark Beach 42", Email = "jess@gmail.com", PhoneNumber = "3584-1287" };

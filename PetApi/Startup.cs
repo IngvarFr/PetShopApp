@@ -45,6 +45,7 @@ namespace PetApi
             {
                 services.AddDbContext<PetShopDbContext>(opt => 
                 opt.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
+                //services.AddDbContext<PetShopDbContext>(opt => opt.UseInMemoryDatabase("DataBase"));
             }
             
             services.AddScoped<IPetService, PetService>();
@@ -77,7 +78,9 @@ namespace PetApi
                     DbSeeder.Seed(ctx);
                 }
                 app.UseDeveloperExceptionPage();
+                app.UseHsts();
             }
+            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }
