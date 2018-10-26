@@ -10,7 +10,7 @@ namespace Infrastructure.Data.EntityFramework
     {
         public static void Seed(PetShopDbContext ctx)
         {
-            //ctx.Database.EnsureDeleted();
+            ctx.Database.EnsureDeleted();
             ctx.Database.EnsureCreated();
             var own1 = new Owner() { FirstName = "Bob", LastName = "Barker", Address = "Happy Street 23", Email = "bob@barker.com", PhoneNumber = "9549-8724" };
             var own2 = new Owner() { FirstName = "Jessie", LastName = "Smith", Address = "Shark Beach 42", Email = "jess@gmail.com", PhoneNumber = "3584-1287" };
@@ -21,6 +21,12 @@ namespace Infrastructure.Data.EntityFramework
             ctx.Attach(new Pet() { Name = "Maggie", Type = "Cat", Price = 150, Birthdate = new DateTime(2007, 12, 14), PreviousOwner = own2 }).State = EntityState.Added;
             ctx.Attach(new Pet() { Name = "Ella", Type = "Rabbit", Price = 120, Birthdate = new DateTime(2009, 7, 25), PreviousOwner = own3 }).State = EntityState.Added;
             ctx.Attach(new Pet() { Name = "Hammy", Type = "Hamster", Price = 75, Birthdate = new DateTime(2014, 1, 18), PreviousOwner = own3 }).State = EntityState.Added;
+
+            var user = new User() { Username = "Joe", Password = "1234", IsAdmin = false };
+            var user2 = new User() { Username = "Admin", Password = "admin", IsAdmin = true };
+
+            ctx.Attach(user).State = EntityState.Added;
+            ctx.Attach(user2).State = EntityState.Added;
 
             ctx.SaveChanges();
         }

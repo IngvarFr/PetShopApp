@@ -12,6 +12,8 @@ namespace Infrastructure.Data.EntityFramework
 
         public DbSet<Owner> Owners { get; set; }
 
+        public DbSet<User> Users { get; set; }
+
         public PetShopDbContext(DbContextOptions<PetShopDbContext> opt): base(opt)
         { }
 
