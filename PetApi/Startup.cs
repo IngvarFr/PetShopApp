@@ -53,6 +53,7 @@ namespace PetApi
             services.AddScoped<IOwnerRepository, OwnerRepository>();
             services.AddScoped<IOwnerService, OwnerService>();
             services.BuildServiceProvider();
+            services.AddCors();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -79,6 +80,7 @@ namespace PetApi
                 }
                 app.UseDeveloperExceptionPage();
                 app.UseHsts();
+                app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             }
             app.UseHttpsRedirection();
             app.UseMvc();
