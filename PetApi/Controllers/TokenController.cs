@@ -36,7 +36,7 @@ namespace PetShopApp.RestApi.Controllers
             }
 
             // check if password is correct
-            if (!model.Password.Equals(user.Password))
+            if (!VerifyPasswordHash(model.Password, user.PasswordHash, user.PasswordSalt))
             {
                 return Unauthorized();
             }
@@ -47,6 +47,22 @@ namespace PetShopApp.RestApi.Controllers
                 username = user.Username,
                 token = GenerateToken(user)
             });
+        }
+
+        private bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt))
+            {
+                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                for (int i = 0; i < computedHash.Length; i++)
+                {
+                    if (computedHash[i] != storedHash[i])
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
 
         // This method generates and returns a JWT token for a user.

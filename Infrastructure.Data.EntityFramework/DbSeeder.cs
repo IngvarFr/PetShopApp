@@ -22,13 +22,28 @@ namespace Infrastructure.Data.EntityFramework
             ctx.Attach(new Pet() { Name = "Ella", Type = "Rabbit", Price = 120, Birthdate = new DateTime(2009, 7, 25), PreviousOwner = own3 }).State = EntityState.Added;
             ctx.Attach(new Pet() { Name = "Hammy", Type = "Hamster", Price = 75, Birthdate = new DateTime(2014, 1, 18), PreviousOwner = own3 }).State = EntityState.Added;
 
-            var user = new User() { Username = "Joe", Password = "1234", IsAdmin = false };
-            var user2 = new User() { Username = "Admin", Password = "admin", IsAdmin = true };
+            string password = "1234";
+            byte[] passwordHashJoe, passwordSaltJoe, passwordHashAdmin, passwordSaltAdmin;
+
+            CreatePasswordHash(password, out passwordHashJoe, out passwordSaltJoe);
+            CreatePasswordHash(password, out passwordHashAdmin, out passwordSaltAdmin);
+
+            var user = new User() { Username = "Joe", PasswordHash = passwordHashJoe, PasswordSalt = passwordSaltJoe, IsAdmin = false };
+            var user2 = new User() { Username = "Admin", PasswordHash = passwordHashAdmin, PasswordSalt = passwordSaltAdmin, IsAdmin = true };
 
             ctx.Attach(user).State = EntityState.Added;
             ctx.Attach(user2).State = EntityState.Added;
 
             ctx.SaveChanges();
+        }
+
+        private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            {
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            }
         }
     }
 }
